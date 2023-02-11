@@ -71,4 +71,4 @@ jobs:
       
 
       - name: Convert
-        run: php7.4 workflows-yaml-to-mermaid.php maven-publish.yml
+        run: php workflows-yaml-to-mermaid.php maven-publish.yml
