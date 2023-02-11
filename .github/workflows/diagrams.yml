@@ -51,9 +51,13 @@ jobs:
           # md5: # optional
           # SHA256 hash value to check against
           # sha256: # optional
+      - name: Composer Install
+        run: composer install
+
 
       - name: Shell
         run: |
+
           echo Add other actions to build
           ls -lha
 
