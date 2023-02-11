@@ -32,7 +32,7 @@ jobs:
           echo test, and deploy your project.
     
       - name: PHP Runner
-        uses: franzliedke/gh-action-php@0.2.0
+        uses: franzliedke/gh-action-php@0.3.0
       
       
       
