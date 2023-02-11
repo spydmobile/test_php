@@ -31,3 +31,26 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
     
+      - name: PHP Runner
+        uses: franzliedke/gh-action-php@0.2.0
+      
+      
+      
+      - name: Download File To Workspace
+        # You may pin to the exact commit or the version.
+        # uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862
+        uses: carlosperate/download-file-action@v2.0.0
+        with:
+          # URL of the file to download
+          file-url: https://raw.githubusercontent.com/WISE-Developers/WISE_Builder_Component/main/.github/workflows/maven-publish.yml
+          # New filename to rename the downloaded file
+          # file-name: # optional
+          # Path to download the file
+          # location: # optional, default is .
+          # MD5 hash value to check against
+          # md5: # optional
+          # SHA256 hash value to check against
+          # sha256: # optional
+          
+      - name: Convert
+        run: php8.1 workflows-yaml-to-mermaid.php maven-publish.yml
