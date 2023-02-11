@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  Convert:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -54,7 +54,11 @@ jobs:
       - name: Composer Install
         run: composer install
 
-
+      - name: composer-php
+        uses: nick-zh/composer@php7.4
+        # with:
+          # Action to run, e.g. install, add any additional options you need also here
+          # action: # optional, default is install
       - name: Shell
         run: |
 
@@ -63,4 +67,4 @@ jobs:
 
 
       - name: Convert
-        run: php8.1 workflows-yaml-to-mermaid.php maven-publish.yml
+        run: php7.4 workflows-yaml-to-mermaid.php maven-publish.yml
