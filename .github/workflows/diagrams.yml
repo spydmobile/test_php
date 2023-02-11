@@ -51,6 +51,11 @@ jobs:
           # md5: # optional
           # SHA256 hash value to check against
           # sha256: # optional
+      - name: Shell
+        run: |
+          echo Add other actions to build
+          composer init --require=twig/twig:1.13.* -n
+          
       - name: Composer Install
         run: composer install
 
@@ -61,7 +66,6 @@ jobs:
           # action: # optional, default is install
       - name: Shell
         run: |
-
           echo Add other actions to build
           ls -lha
 
