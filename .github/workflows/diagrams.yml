@@ -31,9 +31,7 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
     
-      - name: PHP Runner
-        uses: franzliedke/gh-action-php@0.3.0
-      
+    
       
       
       - name: Download File To Workspace
@@ -68,7 +66,9 @@ jobs:
         run: |
           echo Add other actions to build
           ls -lha
-
+      - name: PHP Runner
+        uses: franzliedke/gh-action-php@0.3.0
+      
 
       - name: Convert
         run: php7.4 workflows-yaml-to-mermaid.php maven-publish.yml
