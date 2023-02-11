@@ -51,6 +51,12 @@ jobs:
           # md5: # optional
           # SHA256 hash value to check against
           # sha256: # optional
-          
+
+      - name: Shell
+        run: |
+          echo Add other actions to build
+          ls -lha
+
+
       - name: Convert
         run: php8.1 workflows-yaml-to-mermaid.php maven-publish.yml
