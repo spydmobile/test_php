@@ -32,7 +32,7 @@ final class WorkflowPrinter {
   public function __construct($id, $workflow) {
     var_dump($workflow);
     $this->id = $id;
-    $this->steps = array_map(fn($id, $definition) => Name::fromDefinition($id, $definition), array_keys($workflow['steps']), $workflow['steps']);
+    $this->steps = array_map(fn($id, $definition) => Step::fromDefinition($id, $definition), array_keys($workflow['steps']), $workflow['steps']);
 //     $this->uses = array_map(fn($id, $definition) => Stepuse::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
     $this->escaper = fn ($x) => "\"{$x}\"";
   }
@@ -72,9 +72,11 @@ final class Step {
   public string $id;
   public string $name;
 
-  public function __construct($id, $name) {
+  public function __construct($id, $name, $from, $to) {
     $this->id = $id;
     $this->name = $name;
+    $this->from = $from;
+    $this->to = $to;
   }
 
   public static function fromDefinition($id, $definition): self {
@@ -88,7 +90,7 @@ final class Step {
 
 
   public static function fromDefinition($id, $definition): self {
-    return new static($id, $definition['label'], $definition['from'], $definition['to']);
+    return new static($id, $definition['uses'], $definition['name'], $definition['with']);
   }
 
   /**
