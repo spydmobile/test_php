@@ -28,21 +28,10 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Download Workflow
-        # You may pin to the exact commit or the version.
-        # uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862
         uses: carlosperate/download-file-action@v2.0.0
         with:
-          # URL of the file to download
           file-url: https://raw.githubusercontent.com/WISE-Developers/WISE_Builder_Component/main/.github/workflows/maven-publish.yml
-          # New filename to rename the downloaded file
-          # file-name: # optional
-          # Path to download the file
-          # location: # optional, default is .
-          # MD5 hash value to check against
-          # md5: # optional
-          # SHA256 hash value to check against
-          # sha256: # optional
-          
+
       - name: Setup Composer
         run: |
           echo Add other actions to build
@@ -51,23 +40,18 @@ jobs:
           
       - name: Composer Install
         run: composer install
-        
-   
 
-#       - name: composer-php
-#         uses: nick-zh/composer@php7.4
-#         # with:
-#           # Action to run, e.g. install, add any additional options you need also here
-#           # action: # optional, default is install
-#       - name: Shell
-#         run: |
-#           echo Add other actions to build
-#           ls -lha
-      - name: PHP Runner
-        uses: franzliedke/gh-action-php@0.3.0
+#       - name: Load the PHP Runner
+#         uses: franzliedke/gh-action-php@0.3.0
       
       - name: Check PHP Version
         run: php --version
-        
+      
+      - name: show the workflow
+        run: cat maven-publish.yml
+      
       - name: Convert Workflow to Mermaid
         run: php workflows-yaml-to-mermaid.php maven-publish.yml
+        
+#       - name: show the diagram
+#         run: cat maven-publish.yml
