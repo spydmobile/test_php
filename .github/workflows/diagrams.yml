@@ -73,6 +73,8 @@ jobs:
       - name: PHP Runner
         uses: franzliedke/gh-action-php@0.3.0
       
-
+      - name: Check PHP Version
+        run: php --version
+        
       - name: Convert
         run: php workflows-yaml-to-mermaid.php maven-publish.yml
