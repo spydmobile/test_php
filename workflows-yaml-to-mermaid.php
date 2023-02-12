@@ -85,7 +85,7 @@ final class Step {
     return "{$this->id}[{$escaper($this->name)}]";
   }
 
-}
+
 
   public static function fromDefinition($id, $definition): self {
     return new static($id, $definition['label'], $definition['from'], $definition['to']);
