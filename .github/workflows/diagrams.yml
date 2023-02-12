@@ -56,6 +56,9 @@ jobs:
           
       - name: Composer Install
         run: composer install
+        
+      - name: Install symphony
+        run: composer global require symfony/yaml
 
       - name: composer-php
         uses: nick-zh/composer@php7.4
