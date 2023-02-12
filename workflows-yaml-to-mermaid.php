@@ -10,6 +10,7 @@ $workflowFile = $argv[1];
 
 echo "flowchart TB" . PHP_EOL;
 foreach (WorkflowPrinter::loadFromFile($workflowFile) as $workflow) {
+  dump_var($workflow);
   $workflow->print("\t");
 }
 
