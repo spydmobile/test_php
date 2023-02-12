@@ -20,7 +20,7 @@ final class WorkflowPrinter {
   /**
    * @var \scripts\Step[]
    */
-  private array steps;
+  private array $steps;
 
 
 
