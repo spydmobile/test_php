@@ -34,8 +34,8 @@ final class WorkflowPrinter {
 
   public function __construct($id, $workflow) {
     $this->id = $id;
-    $this->states = array_map(fn($id, $definition) => State::fromDefinition($id, $definition), array_keys($workflow['states']), $workflow['states']);
-    $this->transitions = array_map(fn($id, $definition) => Transition::fromDefinition($id, $definition), array_keys($workflow['transitions']), $workflow['transitions']);
+    $this->states = array_map(fn($id, $definition) => State::fromDefinition($id, $definition), array_keys($workflow['name']), $workflow['name']);
+    $this->transitions = array_map(fn($id, $definition) => Transition::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
     $this->escaper = fn ($x) => "\"{$x}\"";
   }
 
