@@ -51,7 +51,7 @@ final class WorkflowPrinter {
     if (!is_array($workflows)) {
       throw new \Exception("Unexpected return value from WorkflowPrinter::loadFromFile: expected array, got " . gettype($workflows));
     }
-     var_dump($workflows);
+     var_dump($workflows['jobs']['build']);
     return array_map(fn ($id, $workflow) => new static($id, $workflow), array_keys($workflows['jobs']['build']), $workflows['jobs']['build']);
   }
 
