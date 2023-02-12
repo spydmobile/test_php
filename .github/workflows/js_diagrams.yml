@@ -27,7 +27,9 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y nodejs
-        npm install -g js-yaml
+        npm init -y
+        npm install js-yaml
+        npm i
 
     - name: convert
       run: node convert.js
