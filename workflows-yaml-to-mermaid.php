@@ -34,7 +34,7 @@ final class WorkflowPrinter {
   private $escaper;
 
   public function __construct($id, $workflow) {
-    if (!isset($workflow.['name'])) {
+    if ($workflow.['name'] == null ) {
       $workflow['name'] = "unnamed".$id;
     }
     $this->id = $id;
