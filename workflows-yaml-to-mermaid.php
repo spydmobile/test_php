@@ -33,6 +33,10 @@ final class WorkflowPrinter {
   private $escaper;
 
   public function __construct($id, $workflow) {
+    if (!is_array($workflow)) {
+    throw new \Exception("Unexpected type: expected array, got " . gettype($workflow));
+    }
+    var_dump($workflow);
     $this->id = $id;
     $this->states = array_map(fn($id, $definition) => State::fromDefinition($id, $definition), array_keys($workflow['states']), $workflow['states']);
     $this->transitions = array_map(fn($id, $definition) => Transition::fromDefinition($id, $definition), array_keys($workflow['transitions']), $workflow['transitions']);
