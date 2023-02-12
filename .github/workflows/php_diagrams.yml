@@ -1,7 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Create Workflow Diagrams
-run-name: Create Workflow Diagrams
+name: Create Workflow Diagrams (PHP)
+run-name: Create Workflow Diagrams (PHP)
 # Controls when the workflow will run
 on:
   push:
