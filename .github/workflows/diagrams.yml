@@ -49,6 +49,7 @@ jobs:
           # md5: # optional
           # SHA256 hash value to check against
           # sha256: # optional
+          
       - name: Setup Composer
         run: |
           echo Add other actions to build
@@ -60,15 +61,15 @@ jobs:
         
    
 
-      - name: composer-php
-        uses: nick-zh/composer@php7.4
-        # with:
-          # Action to run, e.g. install, add any additional options you need also here
-          # action: # optional, default is install
-      - name: Shell
-        run: |
-          echo Add other actions to build
-          ls -lha
+#       - name: composer-php
+#         uses: nick-zh/composer@php7.4
+#         # with:
+#           # Action to run, e.g. install, add any additional options you need also here
+#           # action: # optional, default is install
+#       - name: Shell
+#         run: |
+#           echo Add other actions to build
+#           ls -lha
       - name: PHP Runner
         uses: franzliedke/gh-action-php@0.3.0
       
