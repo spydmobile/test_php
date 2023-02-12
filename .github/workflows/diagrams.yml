@@ -49,16 +49,16 @@ jobs:
           # md5: # optional
           # SHA256 hash value to check against
           # sha256: # optional
-      - name: Shell
+      - name: Setup Composer
         run: |
           echo Add other actions to build
           composer init --require=twig/twig:1.13.* -n
+          composer require symfony/yaml
           
       - name: Composer Install
         run: composer install
         
-      - name: Install symphony
-        run: composer global require symfony/yaml
+   
 
       - name: composer-php
         uses: nick-zh/composer@php7.4
