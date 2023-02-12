@@ -34,6 +34,9 @@ final class WorkflowPrinter {
   private $escaper;
 
   public function __construct($id, $workflow) {
+    if (!isset($workflow.['name'])) {
+      $workflow['name'] = "unnamed".$id
+    }
     $this->id = $id;
     $this->states = array_map(fn($id, $definition) => State::fromDefinition($id, $definition), array_keys($workflow['name']), $workflow['name']);
     $this->transitions = array_map(fn($id, $definition) => Transition::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
