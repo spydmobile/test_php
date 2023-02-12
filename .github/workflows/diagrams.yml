@@ -27,7 +27,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v3
       
-      - name: Download File To Workspace
+      - name: Download Workflow
         # You may pin to the exact commit or the version.
         # uses: carlosperate/download-file-action@83d04ab2bc6f9ffa7b6f1ef21c83f630e75d6862
         uses: carlosperate/download-file-action@v2.0.0
@@ -69,5 +69,5 @@ jobs:
       - name: Check PHP Version
         run: php --version
         
-      - name: Convert
+      - name: Convert Workflow to Mermaid
         run: php workflows-yaml-to-mermaid.php maven-publish.yml
