@@ -44,7 +44,7 @@ final class WorkflowPrinter {
    */
   public static function loadFromFile(string $path): array {
     $workflows = Yaml::parse(file_get_contents($path));
-    $steps = $workflows['jobs']['build']['steps']
+    $steps = $workflows['jobs']['build']['steps'];
 
     return array_map(fn ($id, $workflow) => new static($id, $workflow), array_keys($steps), $steps);
   }
