@@ -18,14 +18,14 @@ final class WorkflowPrinter {
   private string $id;
 
   /**
-   * @var \scripts\State[]
+   * @var \scripts\Name[]
    */
-  private array $states;
+  private array $names;
 
   /**
-   * @var \scripts\Transition[]
+   * @var \scripts\Use[]
    */
-  private array $transitions;
+  private array $uses;
 
   /**
    * @var callable
@@ -38,8 +38,8 @@ final class WorkflowPrinter {
 //     }
     var_dump($workflow);
     $this->id = $id;
-    $this->states = array_map(fn($id, $definition) => State::fromDefinition($id, $definition), array_keys($workflow['states']), $workflow['states']);
-    $this->transitions = array_map(fn($id, $definition) => Transition::fromDefinition($id, $definition), array_keys($workflow['transitions']), $workflow['transitions']);
+    $this->names = array_map(fn($id, $definition) => Name::fromDefinition($id, $definition), array_keys($workflow['name']), $workflow['name']);
+    $this->uses = array_map(fn($id, $definition) => Use::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
     $this->escaper = fn ($x) => "\"{$x}\"";
   }
 
@@ -62,19 +62,19 @@ final class WorkflowPrinter {
    */
   public function print($prefix) {
     echo $prefix . "subgraph {$this->id}" . PHP_EOL;
-    foreach ($this->states as $state) {
-      echo $prefix . "\t" . $state->format($this->escaper) . PHP_EOL;
+    foreach ($this->names as $name) {
+      echo $prefix . "\t" . $name->format($this->escaper) . PHP_EOL;
     }
-    foreach ($this->transitions as $transition) {
-      foreach ($transition->format($this->escaper) as $formattedTransition) {
-        echo $prefix . "\t" . $formattedTransition . PHP_EOL;
+    foreach ($this->uses as $use) {
+      foreach ($use->format($this->escaper) as $formattedUse) {
+        echo $prefix . "\t" . $formattedUse . PHP_EOL;
       }
     }
     echo $prefix . "end" . PHP_EOL;
   }
 }
 
-final class State {
+final class Name {
   public string $id;
   public string $label;
 
@@ -93,7 +93,7 @@ final class State {
 
 }
 
-final class Transition {
+final class Use {
   public string $id;
   public string $label;
 
