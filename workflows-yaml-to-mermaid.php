@@ -18,14 +18,11 @@ final class WorkflowPrinter {
   private string $id;
 
   /**
-   * @var \scripts\Name[]
+   * @var \scripts\Step[]
    */
-  private array $names;
+  private array steps;
 
-  /**
-   * @var \scripts\Stepuse[]
-   */
-  private array $uses;
+
 
   /**
    * @var callable
@@ -33,13 +30,10 @@ final class WorkflowPrinter {
   private $escaper;
 
   public function __construct($id, $workflow) {
-//     if (!is_array($workflow)) {
-//     throw new \Exception("Unexpected type: expected array, got " . gettype($workflow));
-//     }
     var_dump($workflow);
     $this->id = $id;
-    $this->names = array_map(fn($id, $definition) => Name::fromDefinition($id, $definition), array_keys($workflow['name']), $workflow['name']);
-    $this->uses = array_map(fn($id, $definition) => Stepuse::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
+    $this->steps = array_map(fn($id, $definition) => Name::fromDefinition($id, $definition), array_keys($workflow['steps']), $workflow['steps']);
+//     $this->uses = array_map(fn($id, $definition) => Stepuse::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
     $this->escaper = fn ($x) => "\"{$x}\"";
   }
 
@@ -51,8 +45,8 @@ final class WorkflowPrinter {
     if (!is_array($workflows)) {
       throw new \Exception("Unexpected return value from WorkflowPrinter::loadFromFile: expected array, got " . gettype($workflows));
     }    
-     var_dump($workflows['jobs']['build']['steps']);
-    return array_map(fn ($id, $workflow) => new static($id, $workflow), array_keys($workflows['jobs']['build']['steps']), $workflows['jobs']['build']['steps']);
+     var_dump($workflows['jobs']['build']);
+    return array_map(fn ($id, $workflow) => new static($id, $workflow), array_keys($workflows['jobs']['build']), $workflows['jobs']['build']);
   }
 
   /**
@@ -62,53 +56,36 @@ final class WorkflowPrinter {
    */
   public function print($prefix) {
     echo $prefix . "subgraph {$this->id}" . PHP_EOL;
-    foreach ($this->names as $name) {
-      echo $prefix . "\t" . $name->format($this->escaper) . PHP_EOL;
+    foreach ($this->steps as $step) {
+      echo $prefix . "\t" . $step.name->format($this->escaper) . PHP_EOL;
     }
-    foreach ($this->uses as $use) {
-      foreach ($use->format($this->escaper) as $formattedUse) {
-        echo $prefix . "\t" . $formattedUse . PHP_EOL;
-      }
-    }
+//     foreach ($this->uses as $use) {
+//       foreach ($use->format($this->escaper) as $formattedUse) {
+//         echo $prefix . "\t" . $formattedUse . PHP_EOL;
+//       }
+//     }
     echo $prefix . "end" . PHP_EOL;
   }
 }
 
-final class Name {
+final class Step {
   public string $id;
-  public string $label;
+  public string $name;
 
-  public function __construct($id, $label) {
+  public function __construct($id, $name) {
     $this->id = $id;
-    $this->label = $label;
+    $this->name = $name;
   }
 
   public static function fromDefinition($id, $definition): self {
-    return new static($id, $definition['label']);
+    return new static($id, $definition['name']);
   }
 
   public function format(callable $escaper): string {
-    return "{$this->id}[{$escaper($this->label)}]";
+    return "{$this->id}[{$escaper($this->name)}]";
   }
 
 }
-
-final class Stepuse {
-  public string $id;
-  public string $label;
-
-  /**
-   * @var string[]
-   */
-  public array $from;
-  public string $to;
-
-  public function __construct($id, $label, $from, $to) {
-    $this->id = $id;
-    $this->label = $label;
-    $this->from = $from;
-    $this->to = $to;
-  }
 
   public static function fromDefinition($id, $definition): self {
     return new static($id, $definition['label'], $definition['from'], $definition['to']);
