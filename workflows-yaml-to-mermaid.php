@@ -23,7 +23,7 @@ final class WorkflowPrinter {
   private array $names;
 
   /**
-   * @var \scripts\Use[]
+   * @var \scripts\Stepuse[]
    */
   private array $uses;
 
@@ -39,7 +39,7 @@ final class WorkflowPrinter {
     var_dump($workflow);
     $this->id = $id;
     $this->names = array_map(fn($id, $definition) => Name::fromDefinition($id, $definition), array_keys($workflow['name']), $workflow['name']);
-    $this->uses = array_map(fn($id, $definition) => Use::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
+    $this->uses = array_map(fn($id, $definition) => Stepuse::fromDefinition($id, $definition), array_keys($workflow['uses']), $workflow['uses']);
     $this->escaper = fn ($x) => "\"{$x}\"";
   }
 
@@ -93,7 +93,7 @@ final class Name {
 
 }
 
-final class Use {
+final class Stepuse {
   public string $id;
   public string $label;
 
