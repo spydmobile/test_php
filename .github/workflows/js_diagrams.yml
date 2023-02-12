@@ -3,55 +3,53 @@
 name: Create Workflow Diagrams (JS)
 run-name: Create Workflow Diagrams (JS)
 # Controls when the workflow will run
+# Convert GitHub Actions workflow to Mermaid
+
 on:
-#   push:
-#     branches:
-#     - main
+  push:
+    branches:
+      - main
 
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "Convert"
-  Convert:
-    name: Convert Workflow to Mermaid
-    # The type of runner that the job will run on
+  convert:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      
-      - name: Download Workflow
-        uses: carlosperate/download-file-action@v2.0.0
-        with:
-          file-url: https://raw.githubusercontent.com/WISE-Developers/WISE_Builder_Component/main/.github/workflows/maven-publish.yml
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Download Workflow
+      uses: carlosperate/download-file-action@v2.0.0
+      with:
+        file-url: https://raw.githubusercontent.com/WISE-Developers/WISE_Builder_Component/main/.github/workflows/maven-publish.yml
 
-      - name: Setup Composer
-        run: |
-          echo Add other actions to build
-          composer init --require=twig/twig:1.13.* -n
-          composer require symfony/yaml
-          
-      - name: Composer Install
-        run: composer install
 
-#       - name: Load the PHP Runner
-#         uses: franzliedke/gh-action-php@0.3.0
-      
-      - name: Check PHP Version
-        run: php --version
-      
-      - name: show the workflow
-        run: cat maven-publish.yml
-      
-      - name: Convert Workflow to Mermaid
-        run: php workflows-yaml-to-mermaid.php maven-publish.yml
-        
-#       - name: show the diagram
-#         run: cat maven-publish.yml
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y nodejs
+
+    - name: Convert workflow
+      run: |
+        echo '```mermaid\ngraph LR\n' > workflow.md
+        cat maven-publish.yml | grep '^name: ' | while read line; do
+          name=$(echo $line | cut -d' ' -f2)
+          echo "  $name[$name]" >> workflow.md
+        done
+        cat maven-publish.yml | grep '^uses: ' | while read line; do
+          name=$(echo $line | cut -d' ' -f2)
+          needs=$(echo $line | cut -d' ' -f3-)
+          for need in $needs; do
+            echo "  $name --> $need" >> workflow.md
+          done
+        done
+        echo '\n```' >> workflow.md
+
+    - name: show results
+      run: cat workflow.md
+
+#     - name: Commit changes
+#       uses: stefanzweifel/git-auto-commit-action@v4
+#       with:
+#         commit_message: 'Update Mermaid diagram'
+#         push: true
+#         branch: main
