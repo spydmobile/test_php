@@ -44,6 +44,9 @@ final class WorkflowPrinter {
    */
   public static function loadFromFile(string $path): array {
     $workflows = Yaml::parse(file_get_contents($path));
+    if (!is_array($workflows)) {
+      throw new \Exception("Unexpected return value from WorkflowPrinter::loadFromFile: expected array, got " . gettype($workflows));
+    }
     return array_map(fn ($id, $workflow) => new static($id, $workflow), array_keys($workflows), $workflows);
   }
 
