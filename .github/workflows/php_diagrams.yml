@@ -4,9 +4,9 @@ name: Create Workflow Diagrams (PHP)
 run-name: Create Workflow Diagrams (PHP)
 # Controls when the workflow will run
 on:
-  push:
-    branches:
-    - main
+#   push:
+#     branches:
+#     - main
 
 
   # Allows you to run this workflow manually from the Actions tab
