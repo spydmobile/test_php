@@ -31,11 +31,11 @@ jobs:
     - name: Convert workflow
       run: |
         echo '```mermaid\ngraph LR\n' > workflow.md
-        cat maven-publish.yml | grep '^name: ' | while read line; do
+        cat maven-publish.yml | grep 'name: ' | while read line; do
           name=$(echo $line | cut -d' ' -f2)
           echo "  $name[$name]" >> workflow.md
         done
-        cat maven-publish.yml | grep '^uses: ' | while read line; do
+        cat maven-publish.yml | grep 'uses: ' | while read line; do
           name=$(echo $line | cut -d' ' -f2)
           needs=$(echo $line | cut -d' ' -f3-)
           for need in $needs; do
